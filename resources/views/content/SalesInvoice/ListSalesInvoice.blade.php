@@ -48,7 +48,9 @@
               @endforeach
             </tbody>
           </table>
-          </ </div>
+        </div>
+            {{ $salesinvoice->links() }}
+        </div>
         </div>
       </div>
 

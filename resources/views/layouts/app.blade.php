@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Document</title>
+    <title>Dwita Binatu</title>
 
 
     <!-- <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
@@ -21,12 +21,7 @@
       }
 
      
-    </style>
-    <div id="loader" class="center"></div> 
-    <script> 
-        
-    </script>  
-   
+    </style>   
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -50,7 +45,7 @@
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="./index.html" class="text-nowrap logo-img">
+          <a href="/home" class="text-nowrap logo-img">
             <img src="{{ asset('Modernize-1.0.0/src/assets/images/logos/dark-logo.svg') }}" width="180" alt="" />
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">

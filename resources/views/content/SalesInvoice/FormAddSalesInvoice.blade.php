@@ -1,14 +1,35 @@
 @inject('SalesInvoice', 'App\Http\Controllers\SalesInvoiceController')
 @extends('layouts.app')
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+        var msg = {!! json_encode(session('msg')) !!};
+        if (msg != null) {
+            var myWindow = window.open("{{ route('print-sales-invoice') }}",'','width=800, height=600');
+            myWindow.print();
+            setTimeout(function() { 
+                myWindow.close();
+        }, 2000);
+        }
+    });
+</script>
 @section('content')
 
 <div class="container-fluid">
-  @if (session('msg'))
-        <div class="alert alert-info" role="alert">
-            {{ session('msg') }}
-        </div>
-    @endif
+  
+  @if(session('msg'))
+  <div class="alert alert-info" role="alert">
+      {{session('msg')}}
+  </div>
+  @endif
+  
+  @if(count($errors) > 0)
+  <div class="alert alert-danger" role="alert">
+      @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+      @endforeach
+  </div>
+  @endif
   <div class="card">
     <div class="card-body">
       <h5 class="card-title fw-semibold mb-4 text-center">Cassier</h5>

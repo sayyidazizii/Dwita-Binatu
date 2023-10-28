@@ -8,10 +8,52 @@
     <div class="card-body">
       <h5 class="card-title fw-semibold mb-4 text-center">List Items</h5>
       <div class="container">
-         <!-- Button trigger modal -->
-         <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          + Tambah Data Item
-        </button>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                <span class="badge text-bg-primary">+ Tambah Item</span>
+              </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Barang</h1>
+                  </div>
+                  <div class="modal-body">
+                    <form method="post" action="{{ route('process-add-item') }}">
+                      @csrf
+                      <div class="mb-3">
+                        <label class="form-label">Nama Barang</label>
+                        <input type="text" class="form-control" name="item_name" id="item_name">
+                      </div>
+                      <div class="d-grid gap-2">
+                        <label for="" class="form-label">Nama Tipe</label>
+                        <select class="js-example-basic-single" id="item_type_id" name="item_type_id">
+                          @foreach($invitemtype as $item)
+                          <option value="{{ $item->item_type_id }}">{{ $item->item_type_name }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                      <div class="d-grid gap-2">
+                        <label for="" class="form-label" hidden>Satuan</label>
+                        <input type="text" hidden class="form-control" name="item_unit_id" id="item_unit_id" value="1">
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Harga</label>
+                        <input type="number" class="form-control" name="item_unit_price" id="item_unit_price">
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              </div>
+          </div>
+        </div>
         <div class="table-responsive">
           <table id="tabel-data" class="table table-bordered table-advance table-hover">
             <thead class="thead-light bg-primary text-light">
@@ -40,7 +82,7 @@
                 <td>{{ $InvItem->getItemUnitName($item->item_unit_id) }}</td>
                 <td>{{ $item->item_unit_price }}</td>
                 <td>
-                  <a href="{{ url('/edit-barang/'.$item->item_id) }}" class="btn btn-warning btn-sm"><i class="ti ti-pencil"></i></a>
+                  <a href="{{ url('/inv-item/edit-item/'.$item->item_id) }}" class="btn btn-warning btn-sm"><i class="ti ti-pencil"></i></a>
                   <a href="{{route('hapus-item', ['item_id' => $item->item_id])}}" name='Reset' class='btn btn-danger btn-sm'onClick='javascript:return confirm(\"apakah yakin ingin dihapus ?\")'><i class="ti ti-trash"></i></a>
                 </td>
               </tr>
@@ -52,52 +94,8 @@
             </tbody>
           </table>
           </div>
+          {{ $items->links() }}
         </div>
       </div>
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Barang</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form method="post" action="">
-                @csrf
-                <div class="mb-3">
-                  <label class="form-label">Nama Barang</label>
-                  <input type="text" class="form-control" name="item_name" id="item_name">
-                </div>
-                <div class="d-grid gap-2">
-                  <label for="" class="form-label">Nama Tipe</label>
-                  <select class="js-example-basic-single" id="item_type_id" name="item_type_id">
-                    @foreach($invitemtype as $item)
-                    <option value="{{ $item->item_type_id }}">{{ $item->item_type_name }}</option>
-                    @endforeach
-                  </select>
-                </div>
-                <div class="d-grid gap-2">
-                  <label for="" class="form-label">Satuan</label>
-                  <select class="js-example-basic-single" id="item_type_id" name="item_type_id">
-                    @foreach($invitemunit as $item)
-                    <option value="{{ $item->item_unit_id }}">{{ $item->item_unit_name }}</option>
-                    @endforeach
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Harga</label>
-                  <input type="number" class="form-control" name="stok" id="stok">
-                </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Simpan</button>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        
 
       @endsection

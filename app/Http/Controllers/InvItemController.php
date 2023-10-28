@@ -8,6 +8,7 @@ use App\Models\InvItemType;
 use App\Models\InvItemUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class InvItemController extends Controller
 {
@@ -20,7 +21,7 @@ class InvItemController extends Controller
     {
         $items = InvItem::select('*')
         ->where('data_state',0)
-        ->get();
+        ->simplePaginate(3);
 
         $invitemtype =  InvItemType::select('*')
         ->get(); 
@@ -39,6 +40,7 @@ class InvItemController extends Controller
             'item_type_id' => $request->item_type_id,
             'item_unit_id' => $request->item_unit_id,
             'item_unit_price' => $request->item_unit_price,
+            'created_id' => Auth::id()
         );
         $data = InvItem::create($barang);
         if ($data) {
@@ -49,8 +51,15 @@ class InvItemController extends Controller
     }
     public function EditBarang($item_id)
     {
-        $data = InvItem::find($item_id);
-        return view('barang.editbarang', compact('data'));
+        $data = InvItem::where('item_id',$item_id)
+        ->first();
+
+        $invitemtype =  InvItemType::select('*')
+        ->get(); 
+
+        $invitemunit =  InvItemUnit::select('*')
+        ->get(); 
+        return view('content/InvItem/FormEditItem', compact('data','invitemtype','invitemunit'));
     }
 
     public function processEditBarang(Request $request)
